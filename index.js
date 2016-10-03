@@ -45,6 +45,12 @@ var testRunners = {
 		}
 	},
 
+	runWithCoverageAndOpen: function(options, done) {
+		options = merge({}, defaultOptions, options);
+		options.autoOpenCoverage = true;
+		testRunners.runWithCoverage(options, done);
+	},
+
 	watch: function(options, done) {
 		options = merge({}, defaultOptions, options);
 		if (options.extraWatch) {
@@ -55,9 +61,6 @@ var testRunners = {
 };
 
 module.exports = testRunners;
-
-// Private helpers
-// ===============
 
 function runKarma(options, config, done, opt_suffix) {
 	var suffix = opt_suffix ? '-' + opt_suffix : '';
@@ -84,10 +87,7 @@ module.exports.TASKS = [
 	{name: 'test:coverage', handler: testRunners.runWithCoverage},
 	{
 		name: 'test:coverage:open',
-		handler: testRunners.runWithCoverage,
-		config: {
-			autoOpenCoverage: true
-		}
+		handler: testRunners.runWithCoverageAndOpen
 	},
 	{name: 'test:watch', handler: testRunners.watch}
 ];
